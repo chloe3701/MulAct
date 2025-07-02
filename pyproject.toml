@@ -18,6 +18,7 @@ notebook = [
 dev = [
     "pytest>=8.4.1",
     "pytest-cov>=6.2.1",
+    "ruff>=0.12.1",
     "sphinx>=8.2.3",
     "sphinx-rtd-theme>=3.0.2",
 ]

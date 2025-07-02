@@ -15,9 +15,11 @@ emission_CO2_heure = True
 optim_prix = False
 
 # Prix fixes si optim_prix = False
-Prix_vente_H2 = {"P1_electrolyse(avec PV)":{"C1_industriel":6, "C2_mobilite":10},
-                "P2_electrolyse": {"C1_industriel":8, "C2_mobilite":11.4},
-                "P3_SMR": {"C1_industriel":4.75, "C2_mobilite":7.6}}
+Prix_vente_H2 = {
+    "P1_electrolyse(avec PV)": {"C1_industriel": 6, "C2_mobilite": 10},
+    "P2_electrolyse": {"C1_industriel": 8, "C2_mobilite": 11.4},
+    "P3_SMR": {"C1_industriel": 4.75, "C2_mobilite": 7.6},
+}
 
 # Degradation acceptable dans la résolution du max_min pour améliorer les émissions de CO2
 # Entre 0 et 1
