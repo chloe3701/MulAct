@@ -1,0 +1,31 @@
+name: build-test
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install Dependencies
+        run: uv sync --with dev
+
+      # - name: Check linting
+      #   run: uv run ruff check
+
+      - name: Run tests
+        run: |
+          uv run pytest
+          # uv venv
+          # uv pip install -e ".[kmedoids,dev]"
+          # uv run pytest --nbmake ./notebooks/
