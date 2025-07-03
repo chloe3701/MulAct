@@ -61,8 +61,8 @@ master_doc = "index"
 
 # General information about the project.
 project = "mulact"
-copyright = "2024, mulact Python Package"
-author = "Robinson Beaucour"
+copyright = "2025, mulact Python Package"
+author = "Chloé Daniel"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
