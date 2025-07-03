@@ -5,6 +5,10 @@ from .pre_processing import SteamMethaneReformer
 from .pre_processing import CCS
 from .pre_processing import read_data
 
+from mulact.param_config import Prix_vente_H2
+from mulact.param_config import optim_prix
+from mulact.param_config import emission_CO2_heure
+
 
 @dataclass
 class Energy:
@@ -140,11 +144,7 @@ def declare_network(time_horizon: int) -> Network:
         energies=energies,
         name_energy=["Elec_reseau", "PV", "Gaz"],
         name_electricity=["Elec_reseau", "PV"],
-        h2_market_prices={
-            "P1_electrolyse(avec PV)": {"C1_industriel": 6, "C2_mobilite": 10},
-            "P2_electrolyse": {"C1_industriel": 8, "C2_mobilite": 11.4},
-            "P3_SMR": {"C1_industriel": 4.75, "C2_mobilite": 7.6},
-        },
+        h2_market_prices=Prix_vente_H2,
     )
     return case_study_network
 
@@ -161,7 +161,7 @@ def declare_study(time_horizon) -> CaseStudy:
     case_study = CaseStudy(
         time=time_horizon,
         network=declare_network(time_horizon),
-        optim_price=False,
-        optim_CO2_heure=True,
+        optim_price=optim_prix,
+        optim_CO2_heure=emission_CO2_heure,
     )
     return case_study

@@ -2,7 +2,7 @@
 
 # Horizon d'optimisation (entre 1 et 8736)
 # 2190: 3 mois
-Time_horizon = 1
+Time_horizon = 2
 
 # Contraintes d'émissions de CO2 à la production
 # Si emission_CO2_heure = True : A chaque heure, les producteurs doivent produire tq 1kgH2 génère < 3.5kgCO2

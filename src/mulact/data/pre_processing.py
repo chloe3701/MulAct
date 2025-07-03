@@ -1,6 +1,6 @@
 import csv
 from dataclasses import dataclass
-import mulact.config as config
+import mulact.param_config as param_config
 
 
 # fichier de données csv
@@ -8,8 +8,7 @@ fichier_données = r"C:\Users\CD282263\mulact\src\mulact\data\Stage_dataseries.c
 
 # Debut des données 106
 debut_data = 0
-# Horizon de temps en heure max = 8736
-Time_horizon = config.Time_horizon
+
 # Energie
 Energie = ["Elec_reseau", "PV", "Gaz"]
 Electricite = ["Elec_reseau", "PV"]
@@ -143,17 +142,3 @@ class CCS:
     @property
     def hourly_capex(self):
         return self.capex / (8760 * self.lifetime)
-
-
-# ----------------------------#
-#    Données producteurs      #
-# ----------------------------#
-
-# Impact Co2 maximal autorisé - en kgCO2 / kgH2
-Impact_max = {p: 3.5 for p in Prod}
-
-# ----------------------------#
-#    Données consommateurs    #
-# ----------------------------#
-# Prix de vente - en €/kgH2
-Prix_vente_H2 = config.Prix_vente_H2
