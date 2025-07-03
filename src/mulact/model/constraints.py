@@ -35,4 +35,5 @@ def declare_constraints(
         Energie=Energie,
         Time=Time,
         optim_CO2_heure=optim_CO2_heure,
+        Prix_vente_H2=Prix_vente_H2,
     )
