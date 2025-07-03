@@ -7,14 +7,14 @@ def declare_goal_consumer(
     Prod: list[str],
     Cons: list[str],
     Time: list[int],
-    Actors: dict[str,Actor],
+    Actors: dict[str, Actor],
 ) -> None:
     # /!\ si modification, ne pas oublier de la changer dans point_nadir.py
     # Valeur de la fonction objective des consommateur:
     # prix au kilo de l'H2
     def C_goal_consumer_rule(m, j):
         prix_total = sum(model.P_H2_vendu[i, j, t] for t in Time for i in Prod)
-        demand_j=Actors[j].internal_struct.demand_h2
+        demand_j = Actors[j].internal_struct.demand_h2
         demande_tot_cons = sum(demand_j[t] for t in Time)
 
         if demande_tot_cons == 0:
@@ -35,7 +35,10 @@ def declare_constraint_consumer(
 ) -> None:
     # La demande est satisfaite
     def C_load_satisfaction_rule(m, j, t):
-        return sum(m.Q_H2_vendu[i, j, t] for i in Prod) == Actors[j].internal_struct.demand_h2[t]
+        return (
+            sum(m.Q_H2_vendu[i, j, t] for i in Prod)
+            == Actors[j].internal_struct.demand_h2[t]
+        )
 
     model.C_load_satisfaction = pyo.Constraint(
         Cons, Time, rule=C_load_satisfaction_rule

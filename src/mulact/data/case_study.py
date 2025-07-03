@@ -47,17 +47,16 @@ class Actor:
 
 @dataclass
 class Network:
-    actors: dict[str,Actor]
+    actors: dict[str, Actor]
     name_p_electrolyzer: list[str]
     name_p_smr: list[str]
     name_cons: list[str]
 
-    energies: dict[str,Energy]
+    energies: dict[str, Energy]
     name_energy: list[str]
     name_electricity: list[str]
 
     h2_market_prices: dict[str, dict[str, float]]
-
 
 
 def declare_network(time_horizon: int) -> Network:
@@ -79,53 +78,53 @@ def declare_network(time_horizon: int) -> Network:
 
     actors = {}
     # Producteurs via electrolyse avec pv
-    actors["P1_electrolyse(avec PV)"]=Actor(
-            name="P1_electrolyse(avec PV)",
-            internal_struct=ProducteurElectrolyzer(
-                energy_sources=["Elec_reseau", "PV"],
-                electrolyzer=Electrolyzer(),
-                storage=Storage(),
-            ),
-        )
+    actors["P1_electrolyse(avec PV)"] = Actor(
+        name="P1_electrolyse(avec PV)",
+        internal_struct=ProducteurElectrolyzer(
+            energy_sources=["Elec_reseau", "PV"],
+            electrolyzer=Electrolyzer(),
+            storage=Storage(),
+        ),
+    )
     # Producteurs via electrolyse sans pv
-    actors["P2_electrolyse"]= Actor(
-            name="P2_electrolyse",
-            internal_struct=ProducteurElectrolyzer(
-                energy_sources=["Elec_reseau"],
-                electrolyzer=Electrolyzer(),
-                storage=Storage(),
-            ),
-        )
+    actors["P2_electrolyse"] = Actor(
+        name="P2_electrolyse",
+        internal_struct=ProducteurElectrolyzer(
+            energy_sources=["Elec_reseau"],
+            electrolyzer=Electrolyzer(),
+            storage=Storage(),
+        ),
+    )
     # Producteurs via smr
-    actors["P3_SMR"]= Actor(
-            name="P3_SMR",
-            internal_struct=ProducteurSMR(
-                energy_sources=["Gaz"], SMR=SteamMethaneReformer(), ccs=CCS()
-            ),
-        )
+    actors["P3_SMR"] = Actor(
+        name="P3_SMR",
+        internal_struct=ProducteurSMR(
+            energy_sources=["Gaz"], SMR=SteamMethaneReformer(), ccs=CCS()
+        ),
+    )
 
     # Consommateurs
     # Prix acceptés par le consommateur : prix cible et prix max
-    actors["C1_industriel"]= Actor(
-            name="C1_industriel",
-            internal_struct=Consumer(
-                pire_prix=10, meilleur_prix=0, demand_h2=Demande_H2["C1_industriel"]
-            ),
-        )
-    actors["C2_mobilite"]=Actor(
-            name="C2_mobilite",
-            internal_struct=Consumer(
-                pire_prix=20, meilleur_prix=0, demand_h2=Demande_H2["C2_mobilite"]
-            ),
-        )
+    actors["C1_industriel"] = Actor(
+        name="C1_industriel",
+        internal_struct=Consumer(
+            pire_prix=10, meilleur_prix=0, demand_h2=Demande_H2["C1_industriel"]
+        ),
+    )
+    actors["C2_mobilite"] = Actor(
+        name="C2_mobilite",
+        internal_struct=Consumer(
+            pire_prix=20, meilleur_prix=0, demand_h2=Demande_H2["C2_mobilite"]
+        ),
+    )
 
     # Déclaration des énergies
     energies = {}
     for e in ["Elec_reseau", "PV", "Gaz"]:
         if e in ["Elec_reseau", "PV"]:
-            energies[e]=Energy(e, Prix_energie[e], Production_elec[e], Impact_elec[e])
+            energies[e] = Energy(e, Prix_energie[e], Production_elec[e], Impact_elec[e])
         else:
-            energies[e]=Energy(e, Prix_energie[e], None, None)
+            energies[e] = Energy(e, Prix_energie[e], None, None)
 
     case_study_network = Network(
         actors=actors,
@@ -148,7 +147,7 @@ def declare_network(time_horizon: int) -> Network:
 class CaseStudy:
     time: int
     network: Network
-    optim_price:bool = False
+    optim_price: bool = False
 
 
 def declare_study(time_horizon) -> CaseStudy:
