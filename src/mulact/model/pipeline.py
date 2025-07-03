@@ -37,6 +37,13 @@ def init_model(case_study: CaseStudy) -> pyo.ConcreteModel:
         Prix_vente_H2=network.h2_market_prices,
     )
 
-    # declare_goal(model, P_electrolyzer, P_SMR, Cons, Time, Demand_H2)
+    declare_goal(
+        model=model,
+        P_electrolyzer=network.name_p_electrolyzer,
+        P_SMR=network.name_p_smr,
+        Cons=network.name_cons,
+        Time=Time,
+        Actors=Actors,
+    )
 
     # optim_mc_cormick(model, optim_price)
