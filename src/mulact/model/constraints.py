@@ -1,5 +1,6 @@
 from .actors.consumer import declare_constraint_consumer
 from .actors.prod_electrolyzer import declare_constraints_p_electrolyzer
+from .actors.prod_smr import declare_constraints_p_smr
 from mulact.data.case_study import Actor
 from mulact.data.case_study import Energy
 import pyomo.environ as pyo
@@ -36,4 +37,15 @@ def declare_constraints(
         Time=Time,
         optim_CO2_heure=optim_CO2_heure,
         Prix_vente_H2=Prix_vente_H2,
+    )
+
+    declare_constraints_p_smr(
+        model=model,
+        P_smr=P_smr,
+        Cons=Cons,
+        Actors=Actors,
+        Energie=Energie,
+        Time=Time,
+        Prix_vente_H2=Prix_vente_H2,
+        optim_CO2_heure=optim_CO2_heure,
     )

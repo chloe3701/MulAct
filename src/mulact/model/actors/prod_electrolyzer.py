@@ -16,7 +16,7 @@ def declare_goal_p_electrolyzer(
         cout_energie = m.P_energie_total[i]
         cout_CAPEX = (m.P_CAPEX_Electrolyseur[i] + m.P_CAPEX_Stockage[i]) * Time_horizon
         recettes = sum(m.P_H2_vendu[i, j, t] for t in Time for j in Cons)
-        return m.fn_obj[i] == cout_energie + cout_CAPEX - recettes
+        return m.goal[i] == cout_energie + cout_CAPEX - recettes
 
     model.C_goal_p_electrolyzer = pyo.Constraint(
         P_electrolyzer, rule=C_goal_p_electrolyzer_rule
@@ -30,7 +30,6 @@ def declare_constraints_p_electrolyzer_physical_flux(
     Cons: list[str],
     Actors: dict[str, Actor],
     Time: list[int],
-    Energie: dict[str, Energy],
 ) -> None:
     # Quantité d'énergie achetée par le producteur
     def C_prod_elec_1_rule(m, i, t):
@@ -225,7 +224,6 @@ def declare_constraints_p_electrolyzer(
         Cons=Cons,
         Actors=Actors,
         Time=Time,
-        Energie=Energie,
     )
 
     declare_constraints_p_electrolyzer_economic(

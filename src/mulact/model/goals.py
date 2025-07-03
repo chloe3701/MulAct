@@ -2,6 +2,7 @@ import pyomo.environ as pyo
 from mulact.data.case_study import Actor
 from .actors.consumer import declare_goal_consumer
 from .actors.prod_electrolyzer import declare_goal_p_electrolyzer
+from .actors.prod_smr import declare_goal_p_smr
 
 
 def declare_goal(
@@ -20,4 +21,5 @@ def declare_goal(
     model.goal = pyo.Var(Actors_names, within=pyo.Reals)
 
     declare_goal_consumer(model=model, Prod=Prod, Cons=Cons, Time=Time, Actors=Actors)
-    # declare_goal_p_electrolyzer(model, P_electrolyzer, Cons, Time)
+    declare_goal_p_electrolyzer(model, P_electrolyzer, Cons, Time)
+    declare_goal_p_smr(model, P_SMR, Cons, Time)
