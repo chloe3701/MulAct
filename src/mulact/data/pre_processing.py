@@ -25,11 +25,8 @@ Cons = ["C1_industriel", "C2_mobilite"]
 # Acteurs
 Acteurs = Prod + Cons
 
-# Time
-Time = [i for i in range(Time_horizon)]
 
-
-def read_data(csv_file, Time_horizon):
+def read_data(csv_file: str, time_horizon: int):
     Production_elec = {e: [] for e in Electricite}
     Impact_elec = {e: [] for e in Electricite}
     Prix_energie = {e: [] for e in Energie}
@@ -70,7 +67,7 @@ def read_data(csv_file, Time_horizon):
 
         # Complétion des données
         for t, row in enumerate(reader):
-            if t >= Time_horizon:
+            if t >= time_horizon:
                 break
             for e in Electricite:
                 Production_elec[e].append(float(row[index[e]]))
@@ -86,9 +83,9 @@ def read_data(csv_file, Time_horizon):
 # Impact_elec : Impact carbone de l'électricité - en kgCo2/MWh
 # Prix_energie : Prix de l'énergie - en €/MWh
 # Demande_H2 : Demande d'H2 du client j
-Production_elec, Impact_elec, Prix_energie, Demande_H2 = read_data(
-    fichier_données, Time_horizon
-)
+# Production_elec, Impact_elec, Prix_energie, Demande_H2 = read_data(
+#     fichier_données, Time_horizon
+# )
 
 
 @dataclass
@@ -148,20 +145,6 @@ class CCS:
         return self.capex / (8760 * self.lifetime)
 
 
-@dataclass
-class ProducteurElectrolyzer:
-    name: str
-    electrolyzer: Electrolyzer
-    storage: Storage
-
-
-@dataclass
-class ProducteurSMR:
-    name: str
-    SMR: SteamMethaneReformer
-    ccs: CCS
-
-
 # ----------------------------#
 #    Données producteurs      #
 # ----------------------------#
@@ -174,43 +157,3 @@ Impact_max = {p: 3.5 for p in Prod}
 # ----------------------------#
 # Prix de vente - en €/kgH2
 Prix_vente_H2 = config.Prix_vente_H2
-
-# Demande totale
-Demande_totale = sum(sum(values) for values in Demande_H2.values())
-# Prix acceptés par le consommateur : prix cible et prix max
-Pire_prix = {"C1_industriel": 10, "C2_mobilite": 20}
-
-Meilleur_prix = {"C1_industriel": 0, "C2_mobilite": 0}
-
-
-def main(P_electrolyseur: list[str], P_SMR: list[str]) -> int:
-    """_summary_
-
-    Args:
-        P_electrolyseur (list[str]): _description_
-        P_SMR (list[str]): _description_
-
-    Returns:
-        int: _description_
-    """
-    producers = {
-        ely_prod: ProducteurElectrolyzer(
-            name=ely_prod,
-            electrolyzer=Electrolyzer(),
-            storage=Storage(),
-        )
-        for ely_prod in P_electrolyseur
-    }
-
-    for smr_prod in P_SMR:
-        producers[smr_prod] = ProducteurSMR(
-            name=smr_prod, SMR=SteamMethaneReformer(), ccs=CCS()
-        )
-
-    print(f"{producers}")
-
-    return 1
-
-
-if __name__ == "__main__":
-    main()
