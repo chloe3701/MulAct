@@ -12,29 +12,36 @@ def init_model(case_study: CaseStudy) -> pyo.ConcreteModel:
     network = case_study.network
 
     # list[str]
-    Prod = network.name_p_electrolyzer + case_study.network.name_p_smr
-    Cons = network.name_cons
-    Energy = network.name_energy
+    Prod_name = network.name_p_electrolyzer + case_study.network.name_p_smr
+    Cons_name = network.name_cons
+    Energy_name = network.name_energy
 
     # list[int]
     Time = [i for i in range(case_study.time)]
 
     # dict[str,Actor]
     Actors = network.actors
+    # dict[str,Energy]
+    Energy = network.energies
 
     model = pyo.ConcreteModel()
 
     # Declaration des variables du model
-    declare_variables(model=model, Prod=Prod, Cons=Cons, Time=Time, Energie=Energy)
+    declare_variables(
+        model=model, Prod=Prod_name, Cons=Cons_name, Time=Time, Energie=Energy_name
+    )
 
     # Declaration des contraintes du model
     declare_constraints(
         model=model,
-        Cons=Cons,
-        Prod=Prod,
+        Cons=Cons_name,
+        P_electrolyzer=network.name_p_electrolyzer,
+        P_smr=network.name_p_smr,
+        Energie=Energy,
         Time=Time,
         Actors=Actors,
         Prix_vente_H2=network.h2_market_prices,
+        optim_CO2_heure=case_study.optim_CO2_heure,
     )
 
     declare_goal(

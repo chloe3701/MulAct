@@ -125,6 +125,7 @@ def declare_network(time_horizon: int) -> Network:
             energies[e] = Energy(e, Prix_energie[e], Production_elec[e], Impact_elec[e])
         else:
             energies[e] = Energy(e, Prix_energie[e], None, None)
+    print(list(energies.keys()))
 
     case_study_network = Network(
         actors=actors,
@@ -148,6 +149,7 @@ class CaseStudy:
     time: int
     network: Network
     optim_price: bool = False
+    optim_CO2_heure: bool = True
 
 
 def declare_study(time_horizon) -> CaseStudy:
@@ -155,5 +157,6 @@ def declare_study(time_horizon) -> CaseStudy:
         time=time_horizon,
         network=declare_network(time_horizon),
         optim_price=False,
+        optim_CO2_heure=True,
     )
     return case_study
