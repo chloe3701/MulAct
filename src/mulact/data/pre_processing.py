@@ -2,9 +2,6 @@ import csv
 from dataclasses import dataclass
 
 
-# fichier de données csv
-fichier_données = r"C:\Users\CD282263\mulact\src\mulact\data\Stage_dataseries.csv"
-
 # Debut des données 106
 debut_data = 0
 

@@ -1,4 +1,10 @@
+import os
+
 # Fichier de configuration d'optimisation. Synthétise les arguments variables du code
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+data_csv = os.path.join(script_dir, "data", "data_sample.csv")
+
 
 # Horizon d'optimisation (entre 1 et 8736)
 # 2190: 3 mois

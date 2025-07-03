@@ -8,6 +8,7 @@ from .pre_processing import read_data
 from mulact.param_config import Prix_vente_H2
 from mulact.param_config import optim_prix
 from mulact.param_config import emission_CO2_heure
+from mulact.param_config import data_csv
 
 
 @dataclass
@@ -74,11 +75,8 @@ def declare_network(time_horizon: int) -> Network:
     #   => Captage d'émission CO2 à dimensionner
     #   - 2 Consommateurs d'H2
 
-    # fichier de données csv
-    csv_file = r"C:\Users\CD282263\mulact\src\mulact\data\Stage_dataseries.csv"
-
     Production_elec, Impact_elec, Prix_energie, Demande_H2 = read_data(
-        csv_file, time_horizon
+        data_csv, time_horizon
     )
 
     actors = {}
