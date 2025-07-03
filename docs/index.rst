@@ -13,12 +13,20 @@ documentation for details.
 
 .. toctree::
    :maxdepth: 2
-   :caption: API Documentation:
+   :caption: Pre-process des données:
    
+   module/param_config
    module/data
 
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Modélisation Pyomo:
+   module/model
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Résolution:
+
+   module/resolution
+   
