@@ -35,9 +35,7 @@ def declare_constraints_p_electrolyzer_physical_flux(
     # Quantité d'énergie achetée par le producteur
     def C_prod_elec_1_rule(m, i, t):
         energy_used = Actors[i].internal_struct.energy_sources
-        return m.Q_energie_total[i, t] == sum(
-            m.Q_energie[i, e, t] for e in energy_used
-        )
+        return m.Q_energie_total[i, t] == sum(m.Q_energie[i, e, t] for e in energy_used)
 
     model.C_prod_elec_1 = pyo.Constraint(P_electrolyzer, Time, rule=C_prod_elec_1_rule)
 
@@ -123,37 +121,51 @@ def declare_constraints_p_electrolyzer_physical_flux(
 
 
 def declare_constraints_p_electrolyzer_economic(
-        model: pyo.ConcreteModel,
-        P_electrolyzer: list[str],
-        Cons: list[str],
-        Energie: dict[str, Energy],
-        Actors: dict[str, Actor],
-        Time: list[int],
-        Prix_vente_H2: dict[str, dict[str, float]],
-
-)->None:
+    model: pyo.ConcreteModel,
+    P_electrolyzer: list[str],
+    Cons: list[str],
+    Energie: dict[str, Energy],
+    Actors: dict[str, Actor],
+    Time: list[int],
+    Prix_vente_H2: dict[str, dict[str, float]],
+) -> None:
     # Cout de production d'H2 : Energie
     def C_prod_elec_12_rule(m, i):
         energy_used = Actors[i].internal_struct.energy_sources
-        return m.P_energie_total[i] == sum(sum(m.Q_energie[i,e,t] * Energie[e].price[t] for e in energy_used) for t in Time)
-    model.C_prod_elec_12 = pyo.Constraint(P_electrolyzer, rule = C_prod_elec_12_rule)
+        return m.P_energie_total[i] == sum(
+            sum(m.Q_energie[i, e, t] * Energie[e].price[t] for e in energy_used)
+            for t in Time
+        )
+
+    model.C_prod_elec_12 = pyo.Constraint(P_electrolyzer, rule=C_prod_elec_12_rule)
 
     # Cout de production : CAPEX par h
     def C_prod_elec_13_rule(m, i):
         acteur = Actors[i].internal_struct
-        return m.P_CAPEX_Electrolyseur[i] == m.Taille_electrolyseur[i] * acteur.electrolyzer.hourly_capex
-    model.C_prod_elec_13 = pyo.Constraint(P_electrolyzer, rule = C_prod_elec_13_rule)
+        return (
+            m.P_CAPEX_Electrolyseur[i]
+            == m.Taille_electrolyseur[i] * acteur.electrolyzer.hourly_capex
+        )
+
+    model.C_prod_elec_13 = pyo.Constraint(P_electrolyzer, rule=C_prod_elec_13_rule)
 
     def C_prod_elec_14_rule(m, i):
         acteur = Actors[i].internal_struct
-        return m.P_CAPEX_Stockage[i] == m.Taille_stockage[i] * acteur.storage.hourly_capex
-    model.C_prod_elec_14 = pyo.Constraint(P_electrolyzer, rule = C_prod_elec_14_rule)
+        return (
+            m.P_CAPEX_Stockage[i] == m.Taille_stockage[i] * acteur.storage.hourly_capex
+        )
+
+    model.C_prod_elec_14 = pyo.Constraint(P_electrolyzer, rule=C_prod_elec_14_rule)
 
     # Prix vendu aux consommateurs (contrainte redondante avec la modélisation des consommateurs)
     # Profit vente d'H2
     def C_prod_elec_15_rule(m, i, j, t):
-        return m.P_H2_vendu[i,j,t] == m.Q_H2_vendu[i,j,t] * Prix_vente_H2[i][j]
-    model.C_prod_elec_15 = pyo.Constraint(P_electrolyzer, Cons, Time, rule = C_prod_elec_15_rule)
+        return m.P_H2_vendu[i, j, t] == m.Q_H2_vendu[i, j, t] * Prix_vente_H2[i][j]
+
+    model.C_prod_elec_15 = pyo.Constraint(
+        P_electrolyzer, Cons, Time, rule=C_prod_elec_15_rule
+    )
+
 
 # def declare_constraints_p_electrolyzer_environmental():
 
@@ -186,7 +198,7 @@ def declare_constraints_p_electrolyzer(
         Time=Time,
         Prix_vente_H2=Prix_vente_H2,
     )
-    
+
 
 #     # Contraintes environnement
 

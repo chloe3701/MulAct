@@ -156,6 +156,6 @@ def declare_study(time_horizon) -> CaseStudy:
         time=time_horizon,
         network=declare_network(time_horizon),
         optim_price=False,
-        optim_CO2_heure=True
+        optim_CO2_heure=True,
     )
     return case_study
