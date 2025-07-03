@@ -27,13 +27,19 @@ def optim_mc_cormick(
 
         def C_cormick_1_rule(m, i, j, t):
             cons = Actors[j]
-            return m.P_H2_vendu[i, j, t] <= m.Q_H2_vendu[i, j, t] * cons.internal_struct.pire_prix
+            return (
+                m.P_H2_vendu[i, j, t]
+                <= m.Q_H2_vendu[i, j, t] * cons.internal_struct.pire_prix
+            )
 
         model.C_cormick_1 = pyo.Constraint(Prod, Cons, Time, rule=C_cormick_1_rule)
 
         def C_cormick_2_rule(m, i, j, t):
             cons = Actors[j]
-            return m.P_H2_vendu[i, j, t] <= cons.internal_struct.demand_h2[t] * m.P_H2_contrat[i, j]
+            return (
+                m.P_H2_vendu[i, j, t]
+                <= cons.internal_struct.demand_h2[t] * m.P_H2_contrat[i, j]
+            )
 
         model.C_cormick_2 = pyo.Constraint(Prod, Cons, Time, rule=C_cormick_2_rule)
 

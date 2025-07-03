@@ -1,6 +1,5 @@
 import csv
 from dataclasses import dataclass
-import mulact.param_config as param_config
 
 
 # fichier de données csv

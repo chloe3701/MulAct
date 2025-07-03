@@ -1,9 +1,5 @@
 import pyomo.environ as pyo
 import logging
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
-
 from .variables import declare_variables
 from mulact.data.case_study import CaseStudy
 
@@ -11,6 +7,9 @@ from mulact.data.case_study import CaseStudy
 from .constraints import declare_constraints
 from .goals import declare_goal
 from .mc_cormick import optim_mc_cormick
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
 
 
 def init_model(case_study: CaseStudy) -> pyo.ConcreteModel:
