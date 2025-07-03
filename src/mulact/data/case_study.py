@@ -18,6 +18,7 @@ class Energy:
 @dataclass
 class Producer:
     energy_sources: list[str]
+    impact_max: float
 
 
 @dataclass
@@ -82,6 +83,7 @@ def declare_network(time_horizon: int) -> Network:
         name="P1_electrolyse(avec PV)",
         internal_struct=ProducteurElectrolyzer(
             energy_sources=["Elec_reseau", "PV"],
+            impact_max=3.5,
             electrolyzer=Electrolyzer(),
             storage=Storage(),
         ),
@@ -91,6 +93,7 @@ def declare_network(time_horizon: int) -> Network:
         name="P2_electrolyse",
         internal_struct=ProducteurElectrolyzer(
             energy_sources=["Elec_reseau"],
+            impact_max=3.5,
             electrolyzer=Electrolyzer(),
             storage=Storage(),
         ),
@@ -99,7 +102,10 @@ def declare_network(time_horizon: int) -> Network:
     actors["P3_SMR"] = Actor(
         name="P3_SMR",
         internal_struct=ProducteurSMR(
-            energy_sources=["Gaz"], SMR=SteamMethaneReformer(), ccs=CCS()
+            energy_sources=["Gaz"],
+            impact_max=3.5,
+            SMR=SteamMethaneReformer(),
+            ccs=CCS(),
         ),
     )
 

@@ -167,7 +167,46 @@ def declare_constraints_p_electrolyzer_economic(
     )
 
 
-# def declare_constraints_p_electrolyzer_environmental():
+def declare_constraints_p_electrolyzer_environmental(
+    model: pyo.ConcreteModel,
+    P_electrolyzer: list[str],
+    Energie: dict[str, Energy],
+    Actors: dict[str, Actor],
+    Time: list[int],
+    optim_CO2_heure: bool,
+) -> None:
+    # Impact carbone producteur
+    def C_prod_elec_16_rule(m, i, t):
+        energy_used = Actors[i].internal_struct.energy_sources
+        return m.Impact_prod[i, t] == sum(
+            m.Q_energie[i, e, t] * Energie[e].impact[t] for e in energy_used
+        )
+
+    model.C_prod_elec_16 = pyo.Constraint(
+        P_electrolyzer, Time, rule=C_prod_elec_16_rule
+    )
+
+    # Contraintes d'emissions maximum
+    # Si contrainte horaire
+    if optim_CO2_heure:
+
+        def C_prod_elec_17_rule(m, i, t):
+            impact_max = Actors[i].internal_struct.impact_max
+            return m.Impact_prod[i, t] <= impact_max * m.Q_H2_prod[i, t]
+
+        model.C_prod_elec_17 = pyo.Constraint(
+            P_electrolyzer, Time, rule=C_prod_elec_17_rule
+        )
+    # Si contrainte en moyenne
+    else:
+
+        def C_prod_elec_17_rule(m, i):
+            impact_max = Actors[i].internal_struct.impact_max
+            return sum(m.Impact_prod[i, t] for t in Time) <= impact_max * sum(
+                m.Q_H2_prod[i, t] for t in Time
+            )
+
+        model.C_prod_elec_17 = pyo.Constraint(P_electrolyzer, rule=C_prod_elec_17_rule)
 
 
 def declare_constraints_p_electrolyzer(
@@ -199,24 +238,11 @@ def declare_constraints_p_electrolyzer(
         Prix_vente_H2=Prix_vente_H2,
     )
 
-
-#     # Contraintes environnement
-
-#     # Impact carbone producteur
-#     def C_prod_elec_16_rule(m, i, t):
-#         return m.Impact_prod[i,t] == sum(m.Q_energie[i, e, t] * Impact_elec[e][t] for e in Electricite)
-#     model.C_prod_elec_16 = pyo.Constraint(P_electrolyzer, Time, rule = C_prod_elec_16_rule)
-
-#     # Contraintes d'emissions maximum
-#     # Si contrainte horaire
-#     if optim_CO2_heure:
-#         def C_prod_elec_17_rule(m, i, t):
-#             return m.Impact_prod[i, t] <= Impact_max[i] * m.Q_H2_prod[i, t]
-#         model.C_prod_elec_17 = pyo.Constraint(P_electrolyzer, Time, rule = C_prod_elec_17_rule)
-#     # Si contrainte en moyenne
-#     else:
-#         def C_prod_elec_17_rule(m, i):
-#             return sum(m.Impact_prod[i, t] for t in Time) <= Impact_max[i] * sum(m.Q_H2_prod[i, t] for t in Time)
-#         model.C_prod_elec_17 = pyo.Constraint(P_electrolyzer, rule = C_prod_elec_17_rule)
-
-#     return model
+    declare_constraints_p_electrolyzer_environmental(
+        model=model,
+        P_electrolyzer=P_electrolyzer,
+        Energie=Energie,
+        Actors=Actors,
+        Time=Time,
+        optim_CO2_heure=optim_CO2_heure,
+    )
