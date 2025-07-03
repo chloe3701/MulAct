@@ -1,4 +1,9 @@
 import pyomo.environ as pyo
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
+
 from .variables import declare_variables
 from mulact.data.case_study import CaseStudy
 
@@ -53,5 +58,10 @@ def init_model(case_study: CaseStudy) -> pyo.ConcreteModel:
         Actors=Actors,
     )
     optim_mc_cormick(model, Prod_name, Cons_name, Actors, Time, case_study.optim_price)
+
+    Nb_var = sum(1 for _ in model.component_data_objects(pyo.Var))
+    Nb_contr = sum(1 for _ in model.component_data_objects(pyo.Constraint))
+    logger.info(f"Nombre de variables : {Nb_var}")
+    logger.info(f"Nombre de contraintes : {Nb_contr}")
 
     return model
