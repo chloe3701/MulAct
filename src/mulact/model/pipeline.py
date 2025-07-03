@@ -52,6 +52,6 @@ def init_model(case_study: CaseStudy) -> pyo.ConcreteModel:
         Time=Time,
         Actors=Actors,
     )
-    optim_mc_cormick(model, Prod_name, Cons_name, case_study.optim_price)
+    optim_mc_cormick(model, Prod_name, Cons_name, Actors, Time, case_study.optim_price)
 
     return model
