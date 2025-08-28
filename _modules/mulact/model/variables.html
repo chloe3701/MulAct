@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mulact.model.variables &mdash; mulact 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/style.css" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            mulact
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Pre-process des données:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module/param_config.html">Paramètres d’optimisation du modèle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module/data.html">Definition du modèle: Données</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Résolution:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module/resolution.html">Résolution du modèle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">mulact</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">mulact.model.variables</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for mulact.model.variables</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pyomo.environ</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pyo</span>
+
+
+<div class="viewcode-block" id="declare_variables_flux">
+<a class="viewcode-back" href="../../../module/model.html#mulact.model.variables.declare_variables_flux">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">declare_variables_flux</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">,</span>
+    <span class="n">Prod</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">Cons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">Time</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">Energie</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Quantitée d&#39;énergie provenant de la source e consommée par le producteur i à temps t. En MWh</span>
+    <span class="c1"># Q_energie[i,e,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_energie</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Energie</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantitée d&#39;énergie totale consommée par le producteur i à temps t. En MWh</span>
+    <span class="c1"># Q_energie_total[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_energie_total</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantitée d&#39;H2 produite par le producteur i à temps t. En kgH2</span>
+    <span class="c1"># Q_H2_prod[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_prod</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantitée d&#39;H2 dans le stock du producteur i à temps t. En kgH2</span>
+    <span class="c1"># Q_H2_stock[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_stock</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantitée d&#39;H2 dans le stock initial du producteur i. En kgH2</span>
+    <span class="c1"># Q_H2_init_stock[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_init_stock</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantité d’H2 rentrant dans le stockage du producteur i à temps t. En kgH2</span>
+    <span class="c1"># Q_H2_stock_in[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_stock_in</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantité d’H2 sortant du stockage du producteur i à temps t. En kgH2</span>
+    <span class="c1"># Q_H2_stock_out[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_stock_out</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantité d’H2 vendue sur le marché par le producteur i à temps t (avant répartition entre les consommateurs). En kgH2</span>
+    <span class="c1"># Q_H2_a_vendre[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_a_vendre</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Quantité d’H2 vendue par le producteur i au consommateur j à temps t. En kgH2</span>
+    <span class="c1"># Q_H2_vendu[i,j,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Q_H2_vendu</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Cons</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="declare_variables_dimension">
+<a class="viewcode-back" href="../../../module/model.html#mulact.model.variables.declare_variables_dimension">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">declare_variables_dimension</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">,</span> <span class="n">Prod</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Taille de l&#39;électrolyseur du producteur i. En MW</span>
+    <span class="c1"># Taille_electrolyseur[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Taille_electrolyseur</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Taille du stockage du producteur i. En kgH2</span>
+    <span class="c1"># Taille_stockage[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Taille_stockage</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Taille du captage de CO2 du producteur i. En kgCO2</span>
+    <span class="c1"># Taille_captage[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Taille_captage</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="declare_variables_eco">
+<a class="viewcode-back" href="../../../module/model.html#mulact.model.variables.declare_variables_eco">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">declare_variables_eco</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">,</span> <span class="n">Prod</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Cons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Time</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;_summary_</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model (pyo.ConcreteModel): _description_</span>
+<span class="sd">        Prod (list[str]): _description_</span>
+<span class="sd">        Cons (list[str]): _description_</span>
+<span class="sd">        Time (list[int]): _description_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Variables économiques</span>
+
+    <span class="c1"># Prix total de l&#39;énergie consommée par le producteur i. En EUR</span>
+    <span class="c1"># P_energie_total[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">P_energie_total</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Coût d’investissement du producteur i pour son électrolyseur par heure. En EUR/h</span>
+    <span class="c1"># P_CAPEX_Electrolyseur[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">P_CAPEX_Electrolyseur</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Coût d’investissement du producteur i pour son stockage par heure. En EUR/h</span>
+    <span class="c1"># P_CAPEX_Stockage[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">P_CAPEX_Stockage</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Coût d’investissement du producteur i pour son système de captage d&#39;émission CO2 par heure. En EUR/h</span>
+    <span class="c1"># P_CAPEX_Captage[i]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">P_CAPEX_Captage</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Prix payé par le consommateur j au producteur i à temps t. En EUR</span>
+    <span class="c1"># P_H2_vendu[i,j,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">P_H2_vendu</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Cons</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="declare_variables_environnement">
+<a class="viewcode-back" href="../../../module/model.html#mulact.model.variables.declare_variables_environnement">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">declare_variables_environnement</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">,</span> <span class="n">Prod</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Time</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Impact CO2 du producteur i à temps t. En kgCO2</span>
+    <span class="c1"># Impact_prod[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Impact_prod</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Emissions de CO2 générés par le vaporeformage du producteur i à temps t. En kgCO2</span>
+    <span class="c1"># Emission_vaporeformage[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Emission_vaporeformage</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Emissions de CO2 captées par le producteur via vaporéformage i à temps t. En kgCO2</span>
+    <span class="c1"># Captage[i,t]</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">Captage</span> <span class="o">=</span> <span class="n">pyo</span><span class="o">.</span><span class="n">Var</span><span class="p">(</span><span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">within</span><span class="o">=</span><span class="n">pyo</span><span class="o">.</span><span class="n">NonNegativeReals</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="declare_variables">
+<a class="viewcode-back" href="../../../module/model.html#mulact.model.variables.declare_variables">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">declare_variables</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">:</span> <span class="n">pyo</span><span class="o">.</span><span class="n">ConcreteModel</span><span class="p">,</span>
+    <span class="n">Prod</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">Cons</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">Time</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">Energie</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># --------------------------------------------------#</span>
+    <span class="c1">#               Variables de décision              #</span>
+    <span class="c1"># --------------------------------------------------#</span>
+    <span class="n">declare_variables_flux</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Prod</span><span class="p">,</span> <span class="n">Cons</span><span class="p">,</span> <span class="n">Time</span><span class="p">,</span> <span class="n">Energie</span><span class="p">)</span>
+    <span class="n">declare_variables_dimension</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Prod</span><span class="p">)</span>
+    <span class="n">declare_variables_eco</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Prod</span><span class="p">,</span> <span class="n">Cons</span><span class="p">,</span> <span class="n">Time</span><span class="p">)</span>
+    <span class="n">declare_variables_environnement</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Prod</span><span class="p">,</span> <span class="n">Time</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, mulact Python Package.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

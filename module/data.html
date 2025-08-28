@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Definition du modèle: Données &mdash; mulact 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Résolution du modèle" href="resolution.html" />
+    <link rel="prev" title="Paramètres d’optimisation du modèle" href="param_config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            mulact
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Pre-process des données:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="param_config.html">Paramètres d’optimisation du modèle</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Definition du modèle: Données</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.pre_processing.CCS"><code class="docutils literal notranslate"><span class="pre">CCS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.CCS.capex"><code class="docutils literal notranslate"><span class="pre">CCS.capex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.CCS.hourly_capex"><code class="docutils literal notranslate"><span class="pre">CCS.hourly_capex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.CCS.lifetime"><code class="docutils literal notranslate"><span class="pre">CCS.lifetime</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.CCS.size_max"><code class="docutils literal notranslate"><span class="pre">CCS.size_max</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer"><code class="docutils literal notranslate"><span class="pre">Electrolyzer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer.capex"><code class="docutils literal notranslate"><span class="pre">Electrolyzer.capex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer.efficiency"><code class="docutils literal notranslate"><span class="pre">Electrolyzer.efficiency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer.hourly_capex"><code class="docutils literal notranslate"><span class="pre">Electrolyzer.hourly_capex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer.lifetime"><code class="docutils literal notranslate"><span class="pre">Electrolyzer.lifetime</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer.size_max"><code class="docutils literal notranslate"><span class="pre">Electrolyzer.size_max</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.pre_processing.SteamMethaneReformer"><code class="docutils literal notranslate"><span class="pre">SteamMethaneReformer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.SteamMethaneReformer.efficiency"><code class="docutils literal notranslate"><span class="pre">SteamMethaneReformer.efficiency</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.SteamMethaneReformer.impact"><code class="docutils literal notranslate"><span class="pre">SteamMethaneReformer.impact</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.SteamMethaneReformer.size"><code class="docutils literal notranslate"><span class="pre">SteamMethaneReformer.size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.pre_processing.Storage"><code class="docutils literal notranslate"><span class="pre">Storage</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Storage.capex"><code class="docutils literal notranslate"><span class="pre">Storage.capex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Storage.hourly_capex"><code class="docutils literal notranslate"><span class="pre">Storage.hourly_capex</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Storage.lifetime"><code class="docutils literal notranslate"><span class="pre">Storage.lifetime</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.pre_processing.Storage.size_max"><code class="docutils literal notranslate"><span class="pre">Storage.size_max</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.pre_processing.read_data"><code class="docutils literal notranslate"><span class="pre">read_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.Actor"><code class="docutils literal notranslate"><span class="pre">Actor</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Actor.internal_struct"><code class="docutils literal notranslate"><span class="pre">Actor.internal_struct</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Actor.name"><code class="docutils literal notranslate"><span class="pre">Actor.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.CaseStudy"><code class="docutils literal notranslate"><span class="pre">CaseStudy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.CaseStudy.network"><code class="docutils literal notranslate"><span class="pre">CaseStudy.network</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.CaseStudy.optim_CO2_heure"><code class="docutils literal notranslate"><span class="pre">CaseStudy.optim_CO2_heure</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.CaseStudy.optim_price"><code class="docutils literal notranslate"><span class="pre">CaseStudy.optim_price</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.CaseStudy.time"><code class="docutils literal notranslate"><span class="pre">CaseStudy.time</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.Consumer"><code class="docutils literal notranslate"><span class="pre">Consumer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Consumer.demand_h2"><code class="docutils literal notranslate"><span class="pre">Consumer.demand_h2</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Consumer.meilleur_prix"><code class="docutils literal notranslate"><span class="pre">Consumer.meilleur_prix</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Consumer.pire_prix"><code class="docutils literal notranslate"><span class="pre">Consumer.pire_prix</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.Energy"><code class="docutils literal notranslate"><span class="pre">Energy</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Energy.available_quantity"><code class="docutils literal notranslate"><span class="pre">Energy.available_quantity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Energy.impact"><code class="docutils literal notranslate"><span class="pre">Energy.impact</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Energy.name"><code class="docutils literal notranslate"><span class="pre">Energy.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Energy.price"><code class="docutils literal notranslate"><span class="pre">Energy.price</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.Network"><code class="docutils literal notranslate"><span class="pre">Network</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.actors"><code class="docutils literal notranslate"><span class="pre">Network.actors</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.energies"><code class="docutils literal notranslate"><span class="pre">Network.energies</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.h2_market_prices"><code class="docutils literal notranslate"><span class="pre">Network.h2_market_prices</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.name_cons"><code class="docutils literal notranslate"><span class="pre">Network.name_cons</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.name_electricity"><code class="docutils literal notranslate"><span class="pre">Network.name_electricity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.name_energy"><code class="docutils literal notranslate"><span class="pre">Network.name_energy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.name_p_electrolyzer"><code class="docutils literal notranslate"><span class="pre">Network.name_p_electrolyzer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Network.name_p_smr"><code class="docutils literal notranslate"><span class="pre">Network.name_p_smr</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.Producer"><code class="docutils literal notranslate"><span class="pre">Producer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Producer.energy_sources"><code class="docutils literal notranslate"><span class="pre">Producer.energy_sources</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.Producer.impact_max"><code class="docutils literal notranslate"><span class="pre">Producer.impact_max</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.ProducteurElectrolyzer"><code class="docutils literal notranslate"><span class="pre">ProducteurElectrolyzer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.ProducteurElectrolyzer.electrolyzer"><code class="docutils literal notranslate"><span class="pre">ProducteurElectrolyzer.electrolyzer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.ProducteurElectrolyzer.storage"><code class="docutils literal notranslate"><span class="pre">ProducteurElectrolyzer.storage</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.ProducteurSMR"><code class="docutils literal notranslate"><span class="pre">ProducteurSMR</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.ProducteurSMR.SMR"><code class="docutils literal notranslate"><span class="pre">ProducteurSMR.SMR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mulact.data.case_study.ProducteurSMR.ccs"><code class="docutils literal notranslate"><span class="pre">ProducteurSMR.ccs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.declare_network"><code class="docutils literal notranslate"><span class="pre">declare_network()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mulact.data.case_study.declare_study"><code class="docutils literal notranslate"><span class="pre">declare_study()</span></code></a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Résolution:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="resolution.html">Résolution du modèle</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mulact</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Definition du modèle: Données</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/module/data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="definition-du-modele-donnees">
+<h1>Definition du modèle: Données<a class="headerlink" href="#definition-du-modele-donnees" title="Link to this heading"></a></h1>
+<dl class="py class" id="module-mulact.data.pre_processing">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.CCS">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.pre_processing.</span></span><span class="sig-name descname"><span class="pre">CCS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4800</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/pre_processing.html#CCS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.pre_processing.CCS" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.CCS.capex">
+<span class="sig-name descname"><span class="pre">capex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4800</span></em><a class="headerlink" href="#mulact.data.pre_processing.CCS.capex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.CCS.hourly_capex">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hourly_capex</span></span><a class="headerlink" href="#mulact.data.pre_processing.CCS.hourly_capex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.CCS.lifetime">
+<span class="sig-name descname"><span class="pre">lifetime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#mulact.data.pre_processing.CCS.lifetime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.CCS.size_max">
+<span class="sig-name descname"><span class="pre">size_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000.0</span></em><a class="headerlink" href="#mulact.data.pre_processing.CCS.size_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Electrolyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.pre_processing.</span></span><span class="sig-name descname"><span class="pre">Electrolyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">efficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/pre_processing.html#Electrolyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.pre_processing.Electrolyzer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Electrolyzer.capex">
+<span class="sig-name descname"><span class="pre">capex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">600000.0</span></em><a class="headerlink" href="#mulact.data.pre_processing.Electrolyzer.capex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Electrolyzer.efficiency">
+<span class="sig-name descname"><span class="pre">efficiency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#mulact.data.pre_processing.Electrolyzer.efficiency" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Electrolyzer.hourly_capex">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hourly_capex</span></span><a class="headerlink" href="#mulact.data.pre_processing.Electrolyzer.hourly_capex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Electrolyzer.lifetime">
+<span class="sig-name descname"><span class="pre">lifetime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#mulact.data.pre_processing.Electrolyzer.lifetime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Electrolyzer.size_max">
+<span class="sig-name descname"><span class="pre">size_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#mulact.data.pre_processing.Electrolyzer.size_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.SteamMethaneReformer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.pre_processing.</span></span><span class="sig-name descname"><span class="pre">SteamMethaneReformer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">efficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000000000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/pre_processing.html#SteamMethaneReformer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.pre_processing.SteamMethaneReformer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.SteamMethaneReformer.efficiency">
+<span class="sig-name descname"><span class="pre">efficiency</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#mulact.data.pre_processing.SteamMethaneReformer.efficiency" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.SteamMethaneReformer.impact">
+<span class="sig-name descname"><span class="pre">impact</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#mulact.data.pre_processing.SteamMethaneReformer.impact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.SteamMethaneReformer.size">
+<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000000000.0</span></em><a class="headerlink" href="#mulact.data.pre_processing.SteamMethaneReformer.size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Storage">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.pre_processing.</span></span><span class="sig-name descname"><span class="pre">Storage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lifetime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/pre_processing.html#Storage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.pre_processing.Storage" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Storage.capex">
+<span class="sig-name descname"><span class="pre">capex</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000.0</span></em><a class="headerlink" href="#mulact.data.pre_processing.Storage.capex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Storage.hourly_capex">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">hourly_capex</span></span><a class="headerlink" href="#mulact.data.pre_processing.Storage.hourly_capex" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Storage.lifetime">
+<span class="sig-name descname"><span class="pre">lifetime</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#mulact.data.pre_processing.Storage.lifetime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.Storage.size_max">
+<span class="sig-name descname"><span class="pre">size_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000.0</span></em><a class="headerlink" href="#mulact.data.pre_processing.Storage.size_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mulact.data.pre_processing.read_data">
+<span class="sig-prename descclassname"><span class="pre">mulact.data.pre_processing.</span></span><span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csv_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/pre_processing.html#read_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.pre_processing.read_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class" id="module-mulact.data.case_study">
+<dt class="sig sig-object py" id="mulact.data.case_study.Actor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">Actor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">internal_struct</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mulact.data.case_study.Producer" title="mulact.data.case_study.Producer"><span class="pre">mulact.data.case_study.Producer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Consumer" title="mulact.data.case_study.Consumer"><span class="pre">mulact.data.case_study.Consumer</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#Actor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.Actor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Actor.internal_struct">
+<span class="sig-name descname"><span class="pre">internal_struct</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Producer" title="mulact.data.case_study.Producer"><span class="pre">Producer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Consumer" title="mulact.data.case_study.Consumer"><span class="pre">Consumer</span></a></em><a class="headerlink" href="#mulact.data.case_study.Actor.internal_struct" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Actor.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mulact.data.case_study.Actor.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.CaseStudy">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">CaseStudy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mulact.data.case_study.Network" title="mulact.data.case_study.Network"><span class="pre">mulact.data.case_study.Network</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">optim_price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optim_CO2_heure</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#CaseStudy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.CaseStudy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.CaseStudy.network">
+<span class="sig-name descname"><span class="pre">network</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Network" title="mulact.data.case_study.Network"><span class="pre">Network</span></a></em><a class="headerlink" href="#mulact.data.case_study.CaseStudy.network" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.CaseStudy.optim_CO2_heure">
+<span class="sig-name descname"><span class="pre">optim_CO2_heure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#mulact.data.case_study.CaseStudy.optim_CO2_heure" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.CaseStudy.optim_price">
+<span class="sig-name descname"><span class="pre">optim_price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#mulact.data.case_study.CaseStudy.optim_price" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.CaseStudy.time">
+<span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#mulact.data.case_study.CaseStudy.time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.Consumer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">Consumer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pire_prix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meilleur_prix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demand_h2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#Consumer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.Consumer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Consumer.demand_h2">
+<span class="sig-name descname"><span class="pre">demand_h2</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Consumer.demand_h2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Consumer.meilleur_prix">
+<span class="sig-name descname"><span class="pre">meilleur_prix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#mulact.data.case_study.Consumer.meilleur_prix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Consumer.pire_prix">
+<span class="sig-name descname"><span class="pre">pire_prix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#mulact.data.case_study.Consumer.pire_prix" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.Energy">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">Energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">available_quantity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#Energy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.Energy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Energy.available_quantity">
+<span class="sig-name descname"><span class="pre">available_quantity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#mulact.data.case_study.Energy.available_quantity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Energy.impact">
+<span class="sig-name descname"><span class="pre">impact</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#mulact.data.case_study.Energy.impact" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Energy.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#mulact.data.case_study.Energy.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Energy.price">
+<span class="sig-name descname"><span class="pre">price</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Energy.price" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">Network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">actors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Actor" title="mulact.data.case_study.Actor"><span class="pre">mulact.data.case_study.Actor</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_p_electrolyzer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_p_smr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_cons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Energy" title="mulact.data.case_study.Energy"><span class="pre">mulact.data.case_study.Energy</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_energy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_electricity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h2_market_prices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#Network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.Network" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.actors">
+<span class="sig-name descname"><span class="pre">actors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Actor" title="mulact.data.case_study.Actor"><span class="pre">Actor</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.actors" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.energies">
+<span class="sig-name descname"><span class="pre">energies</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.case_study.Energy" title="mulact.data.case_study.Energy"><span class="pre">Energy</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.energies" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.h2_market_prices">
+<span class="sig-name descname"><span class="pre">h2_market_prices</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.h2_market_prices" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.name_cons">
+<span class="sig-name descname"><span class="pre">name_cons</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.name_cons" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.name_electricity">
+<span class="sig-name descname"><span class="pre">name_electricity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.name_electricity" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.name_energy">
+<span class="sig-name descname"><span class="pre">name_energy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.name_energy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.name_p_electrolyzer">
+<span class="sig-name descname"><span class="pre">name_p_electrolyzer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.name_p_electrolyzer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Network.name_p_smr">
+<span class="sig-name descname"><span class="pre">name_p_smr</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Network.name_p_smr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.Producer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">Producer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#Producer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.Producer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Producer.energy_sources">
+<span class="sig-name descname"><span class="pre">energy_sources</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#mulact.data.case_study.Producer.energy_sources" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.Producer.impact_max">
+<span class="sig-name descname"><span class="pre">impact_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#mulact.data.case_study.Producer.impact_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.ProducteurElectrolyzer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">ProducteurElectrolyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electrolyzer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer" title="mulact.data.pre_processing.Electrolyzer"><span class="pre">mulact.data.pre_processing.Electrolyzer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mulact.data.pre_processing.Storage" title="mulact.data.pre_processing.Storage"><span class="pre">mulact.data.pre_processing.Storage</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#ProducteurElectrolyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.ProducteurElectrolyzer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mulact.data.case_study.Producer" title="mulact.data.case_study.Producer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Producer</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.ProducteurElectrolyzer.electrolyzer">
+<span class="sig-name descname"><span class="pre">electrolyzer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.pre_processing.Electrolyzer" title="mulact.data.pre_processing.Electrolyzer"><span class="pre">Electrolyzer</span></a></em><a class="headerlink" href="#mulact.data.case_study.ProducteurElectrolyzer.electrolyzer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.ProducteurElectrolyzer.storage">
+<span class="sig-name descname"><span class="pre">storage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.pre_processing.Storage" title="mulact.data.pre_processing.Storage"><span class="pre">Storage</span></a></em><a class="headerlink" href="#mulact.data.case_study.ProducteurElectrolyzer.storage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="mulact.data.case_study.ProducteurSMR">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">ProducteurSMR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">impact_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SMR</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mulact.data.pre_processing.SteamMethaneReformer" title="mulact.data.pre_processing.SteamMethaneReformer"><span class="pre">mulact.data.pre_processing.SteamMethaneReformer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#mulact.data.pre_processing.CCS" title="mulact.data.pre_processing.CCS"><span class="pre">mulact.data.pre_processing.CCS</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/mulact/data/case_study.html#ProducteurSMR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.ProducteurSMR" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mulact.data.case_study.Producer" title="mulact.data.case_study.Producer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Producer</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.ProducteurSMR.SMR">
+<span class="sig-name descname"><span class="pre">SMR</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.pre_processing.SteamMethaneReformer" title="mulact.data.pre_processing.SteamMethaneReformer"><span class="pre">SteamMethaneReformer</span></a></em><a class="headerlink" href="#mulact.data.case_study.ProducteurSMR.SMR" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="mulact.data.case_study.ProducteurSMR.ccs">
+<span class="sig-name descname"><span class="pre">ccs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#mulact.data.pre_processing.CCS" title="mulact.data.pre_processing.CCS"><span class="pre">CCS</span></a></em><a class="headerlink" href="#mulact.data.case_study.ProducteurSMR.ccs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mulact.data.case_study.declare_network">
+<span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">declare_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_horizon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mulact.data.case_study.Network" title="mulact.data.case_study.Network"><span class="pre">Network</span></a></span></span><a class="reference internal" href="../_modules/mulact/data/case_study.html#declare_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.declare_network" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mulact.data.case_study.declare_study">
+<span class="sig-prename descclassname"><span class="pre">mulact.data.case_study.</span></span><span class="sig-name descname"><span class="pre">declare_study</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time_horizon</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#mulact.data.case_study.CaseStudy" title="mulact.data.case_study.CaseStudy"><span class="pre">CaseStudy</span></a></span></span><a class="reference internal" href="../_modules/mulact/data/case_study.html#declare_study"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mulact.data.case_study.declare_study" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="param_config.html" class="btn btn-neutral float-left" title="Paramètres d’optimisation du modèle" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="resolution.html" class="btn btn-neutral float-right" title="Résolution du modèle" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, mulact Python Package.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
